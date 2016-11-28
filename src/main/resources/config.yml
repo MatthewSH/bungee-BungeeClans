@@ -1,0 +1,35 @@
+database:
+  uri: "localhost/database"
+  username: "homestead"
+  password: "secret"
+
+system:
+  chat-prefix: "&l&b[BungeeClans]&r "
+  clan-id-type: "hash" # Can be hash, number, clan-id (hash generated for fallback), or id (not suggested). Hash looks like "bv3ds1", number looks like "352445", clan-id is the clan's id when create, and id is the clan row id (not suggested).
+  clan-id-length: 6 # The length of the id (ignored if clan-id-type is id or clan-id)
+  query-system: true # Allows querying of the plugin to return player info.
+  query-port: 24565 # Change this if you have any conflicts
+  server-aliases:
+    - "hub-0": "Hub"
+    - "skyblock": "Skyblock"
+
+clan-defaults:
+  name: "My BungeeClans Clan"
+  description: "This is one awesome clan you should join!"
+  motto: "Hack the planet!"
+
+web-panel:
+  active: false
+  base-url: "http://mysite.com/clans" # Base web application URL
+  directory: "directory" # List all clans
+  clan-create: "clan/create"
+  clan-members: "clan/{id}/members"
+  clan-info: "clan/{id}/info"
+
+player:
+  max-clans-joined: 1 # Max clans players can join by default.
+  max-clans-owned: 1 # Max clans a player can own/create
+  
+  # Use bungeeclans.player.max-clans-(owned or joined).number to bypass max.
+ 
+debug: false

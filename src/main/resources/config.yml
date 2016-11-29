@@ -17,6 +17,7 @@ clan-defaults:
   name: "My BungeeClans Clan"
   description: "This is one awesome clan you should join!"
   motto: "Hack the planet!"
+  max-members: 10 # Suggested to leave this to avoid huge clans.
 
 web-panel:
   active: false

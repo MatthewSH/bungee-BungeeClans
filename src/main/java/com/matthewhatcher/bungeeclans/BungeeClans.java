@@ -1,12 +1,11 @@
 package com.matthewhatcher.bungeeclans;
 
-import java.io.File;
-import java.io.IOException;
+import com.matthewhatcher.bungeeclans.Utils.ConfigUtils;
+import com.matthewhatcher.bungeeclans.Utils.MessageUtils;
+import com.matthewhatcher.bungeeclans.Utils.SQLUtils;
 
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
-import net.md_5.bungee.config.ConfigurationProvider;
-import net.md_5.bungee.config.YamlConfiguration;
 
 public class BungeeClans extends Plugin {
 	private static BungeeClans instance;
@@ -15,18 +14,22 @@ public class BungeeClans extends Plugin {
 		return instance;
 	}
 	
-	public static Configuration getConfig() {
-		try {
-			return ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getInstance().getDataFolder().getPath(), "config.yml"));
-		} catch (IOException e) {
-			getInstance().getLogger().severe("Could not get the configuration file.");
-			return null;
-		}
-	}
+	public ConfigUtils configUtils;
+	public SQLUtils sqlUtils;
 	
 	@Override
 	public void onEnable() {
 		instance = this;
+		
+		configUtils = new ConfigUtils();
+		configUtils.firstRun();
+		
+		Configuration config = configUtils.getConfig();
+		
+		sqlUtils = new SQLUtils(config.getString("database.uri"), config.getString("database.username"), config.getString("database.password"));
+		sqlUtils.firstRun();
+		
+		MessageUtils.prefix = config.getString("system.chat-prefix");
 		
 		super.onEnable();
 	}

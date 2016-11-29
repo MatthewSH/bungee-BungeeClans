@@ -50,7 +50,7 @@ public class OwnerCommand extends Command {
 			String clanTag = args[1];
 			String currentOwnerUUID = player.getUniqueId().toString().replace("-", "");
 			String newOwnerUUID = null;
-			String newOwnerUsername = args[2]
+			String newOwnerUsername = args[2];
 			int clanId = 0;
 			
 			if(BungeeClans.getInstance().getProxy().getPlayer(newOwnerUsername).isConnected()) {

@@ -77,4 +77,19 @@ public class ClanUtils {
 		
 		return there;
 	}
+	
+	public static boolean isInClan(ProxiedPlayer p, String clanTag) {
+		boolean isIn = false;
+		
+		return isIn;
+	}
+	
+	// Get Clan info
+	// Get clan count for member
+	// Create clan
+	// edit field in clan
+	// get clan members
+	// kick clan member
+	// get player info
+	// delete clan
 }

@@ -1,5 +1,6 @@
 package com.matthewhatcher.bungeeclans.Commands;
 
+import com.matthewhatcher.bungeeclans.Utils.ClanChatUtils;
 import com.matthewhatcher.bungeeclans.Utils.ClanUtils;
 import com.matthewhatcher.bungeeclans.Utils.MessageUtils;
 
@@ -15,7 +16,7 @@ public class UserCommand extends Command {
 	 *  accept <id>
 	 *  reject <id>
 	 *  leave <id>
-	 *  clanchat <on/off>
+	 *  clanchat <on/off> <id>
 	 *  cc <message> Send a message to team
 	 *  jraccept <id>
 	 *  jrdeny <id>

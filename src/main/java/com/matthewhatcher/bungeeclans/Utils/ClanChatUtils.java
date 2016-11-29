@@ -19,12 +19,16 @@ public class ClanChatUtils {
 	}
 	
 	public static boolean addToChat(ProxiedPlayer p, String clanTag) {
+		// Do more checks here...
+		// is valid chat?
+		// is clan chat in activeClans? Create new entry.
+		// etc.
 		return activeClanChats.get(clanTag).add(p);
 	}
 	
 	public static void sendToTeam(String clanTag, String message) {
 		ArrayList<ProxiedPlayer> team = activeClanChats.get(clanTag);
-		TextComponent msg = new TextComponent(ChatColor.AQUA + "[CC] " + ChatColor.WHITE + message);
+		TextComponent msg = new TextComponent(ChatColor.AQUA + "[" + clanTag + "] " + ChatColor.WHITE + message);
 		
 		for(ProxiedPlayer p : team) {
 			p.sendMessage(msg);

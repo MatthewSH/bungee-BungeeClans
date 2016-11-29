@@ -28,8 +28,9 @@ public class OwnerCommand extends Command {
 	 *  invite <player>
 	 *  kick <player>
 	 *  joinrequest || jr
-	 *  delete
+	 *  delete <clan tag>
 	 *  edit <field> <entry>
+	 *  player <player> # Get current info on player (join date, current status, last online, current server)
 	 */
 	
 	public OwnerCommand() {

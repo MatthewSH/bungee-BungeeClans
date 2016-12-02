@@ -8,6 +8,8 @@ system:
   clan-id-type: "hash" # Can be hash, number, clan-id (hash generated for fallback), or id (not suggested). Hash looks like "bv3ds1", number looks like "352445", clan-tag is the clan's tag when create, and id is the clan row id (not suggested).
   clan-id-length: 6 # The length of the id (ignored if clan-id-type is id or clan-id)
   clan-tag-length: 4 # Keep in mind, this tag is used in many command...not suggested to be above 4. It is case-sensitive
+  join-request-til: 5 # In minutes, how long a join request from a clan owner to it's members will be valid.
+  join-request-delay: 3 # In seconds, how long it takes before connecting the player to the clan owner's server.
   query-system: true # Allows querying of the plugin to return player info.
   query-port: 24565 # Change this if you have any conflicts
   server-aliases:

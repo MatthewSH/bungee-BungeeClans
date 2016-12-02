@@ -113,10 +113,18 @@ public class SQLUtils {
         }
 	}
 	
-	public ResultSet runSelectSQL(String sqlString) throws SQLException {
-		PreparedStatement sql = getConnection().prepareStatement(sqlString);
-		ResultSet rs = sql.executeQuery();
+	public ResultSet runSelectSQL(String sqlString) {
+		PreparedStatement sql;
+		try {
+			sql = getConnection().prepareStatement(sqlString);
+			ResultSet rs = sql.executeQuery();
+			return rs;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 
-		return rs;
+		
 	}
 }

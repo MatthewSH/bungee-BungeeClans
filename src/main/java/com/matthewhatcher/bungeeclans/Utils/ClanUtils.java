@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -84,12 +85,56 @@ public class ClanUtils {
 		return isIn;
 	}
 	
+	public static boolean isClanOwner(ProxiedPlayer p, String clanTag) {
+		boolean isOwner = false;
+		
+		return isOwner;
+	}
+	
+	public static ArrayList<ProxiedPlayer> getOnlineMembers(String clanTag) {
+		ArrayList<ProxiedPlayer> members = new ArrayList<>();
+		try {
+			int clanId = getClanInfo(clanTag).getInt("id");
+			ResultSet rs = BungeeClans.getInstance().sqlUtils.runSelectSQL("SELECT `uuid` FROM `bc_memberships` WHERE `clan-id`=" + clanId);
+			UUID currentUUID = null;
+			ProxiedPlayer currentPlayer = null;
+			
+			while(rs.next()) {
+				currentUUID = UUID.fromString(rs.getString("uuid"));
+				currentPlayer = BungeeClans.getInstance().getProxy().getPlayer(currentUUID);
+				
+				if(currentPlayer != null) {
+					members.add(currentPlayer);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return members;
+	}
+	
+	public static ResultSet getClanInfo(String clanTag) {
+		return BungeeClans.getInstance().sqlUtils.runSelectSQL("SELECT * FROM `bc_clans` WHERE `tag`='" + clanTag + "'");
+	}
+	
+	/*public static ArrayList<String> parseUUIDs(ArrayList<String> uuids) {
+		ArrayList<String> names = new ArrayList<>();
+		ResultSet uuidCache = BungeeClans.getInstance().sqlUtils.runSelectSQL("SELECT * FROM `bc_uuid_cache");
+		
+		for(String uuid : uuids) {
+		}
+		
+		return names;
+	}*/
+	
 	// Get Clan info
 	// Get clan count for member
 	// Create clan
 	// edit field in clan
 	// get clan members
 	// kick clan member
+	// add clan member
 	// get player info
 	// delete clan
 }

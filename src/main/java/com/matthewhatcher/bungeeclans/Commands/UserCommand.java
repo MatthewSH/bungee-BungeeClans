@@ -1,6 +1,5 @@
 package com.matthewhatcher.bungeeclans.Commands;
 
-import com.matthewhatcher.bungeeclans.Utils.ClanChatUtils;
 import com.matthewhatcher.bungeeclans.Utils.ClanUtils;
 import com.matthewhatcher.bungeeclans.Utils.MessageUtils;
 
@@ -12,7 +11,7 @@ public class UserCommand extends Command {
 	/*
 	 *  bungeeclans || bc || bclans
 	 *  
-	 *  create <id>
+	 *  createclan <id> "[name]" [size]
 	 *  accept <id>
 	 *  reject <id>
 	 *  leave <id>

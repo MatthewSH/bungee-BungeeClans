@@ -19,6 +19,7 @@ import com.google.gson.JsonParser;
 import com.matthewhatcher.bungeeclans.BungeeClans;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.config.Configuration;
 
 public class ClanUtils {
 	// Invitee, Clan Prefix
@@ -51,10 +52,14 @@ public class ClanUtils {
 		}
 		
 		if(clanId > 0) {
-			java.sql.Date dateNow = (java.sql.Date) new Date(Calendar.getInstance().getTimeInMillis());
-			BungeeClans.getInstance().sqlUtils.runSQL("INSERT INTO `memberships` ( `clan-id`, `created_at`, `type`, `uuid`) VALUES (" + clanId + " , '" + dateNow + "', 'member', '" + p.getUniqueId().toString().replace("-", "") + "' )");
-			outstandingInvites.remove(p.getUniqueId(), clanPrefix);
-			MessageUtils.send(p, "You have accepted the invite to the clan.");
+			if(!isClanMaxedOut(clanPrefix)) {
+				java.sql.Date dateNow = (java.sql.Date) new Date(Calendar.getInstance().getTimeInMillis());
+				BungeeClans.getInstance().sqlUtils.runSQL("INSERT INTO `memberships` ( `clan-id`, `created_at`, `type`, `uuid`) VALUES (" + clanId + " , '" + dateNow + "', 'member', '" + p.getUniqueId().toString().replace("-", "") + "' )");
+				outstandingInvites.remove(p.getUniqueId(), clanPrefix);
+				MessageUtils.send(p, "You have accepted the invite to the clan.");
+			} else {
+				MessageUtils.send(p, "The clan has maxed out the amount of members it can have.");
+			}
 		} else {
 			MessageUtils.send(p, "Something went wrong when accepting your invite. Try again?");
 		}
@@ -114,6 +119,18 @@ public class ClanUtils {
 		return members;
 	}
 	
+	public static int getClanCount(String clanTag) {
+		int clanId;
+		try {
+			clanId = getClanInfo(clanTag).getInt("id");
+			ResultSet rs = BungeeClans.getInstance().sqlUtils.runSelectSQL("SELECT `uuid` FROM `bc_memberships` WHERE `clan-id`=" + clanId);
+			return rs.getFetchSize();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
 	public static ResultSet getClanInfo(String clanTag) {
 		return BungeeClans.getInstance().sqlUtils.runSelectSQL("SELECT * FROM `bc_clans` WHERE `tag`='" + clanTag + "'");
 	}
@@ -128,13 +145,61 @@ public class ClanUtils {
 		return names;
 	}*/
 	
-	// Get Clan info
-	// Get clan count for member
+	public static boolean deleteClan(String clanTag) {
+		int clanId;
+		try {
+			clanId = getClanInfo(clanTag).getInt("id");
+			BungeeClans.getInstance().sqlUtils.runSQL("DELETE FROM `bc_clans` WHERE `clan-id`=" + clanId);
+			BungeeClans.getInstance().sqlUtils.runSQL("DELETE FROM `bc_memberships` WHERE `clan-id`=" + clanId);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public static boolean clanExists(String clanTag) {
+		boolean exists = false;
+				
+		try {
+			ResultSet rs = BungeeClans.getInstance().sqlUtils.runSelectSQL("SELECT * FROM `bc_clans` WHERE `tag` = '" + clanTag + "'");
+			if(rs.first())
+				exists = true;
+			else
+				exists = false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return exists;
+	}
+	
+	public static int clansOwned(ProxiedPlayer player) {
+		int amount = 0;
+		
+		return amount;
+	}
+	
+	public static void createClan(ProxiedPlayer owner, String clanTag) {
+		Configuration config = BungeeClans.getInstance().configUtils.getConfig();
+		String defaultName = config.getString("clan-defaults.name"), 
+				defaultMotto = config.getString("clan-defaults.motto"), 
+				defaultDescription = config.getString("clan-defaults.description");
+		int defaultMaxMembers = config.getInt("clan-defaults.max-members");
+		
+		BungeeClans.getInstance().sqlUtils.runSQL("");
+	}
+	
+	public static boolean isClanMaxedOut(String clanTag) {
+		// return if clan can accept more players
+		
+		return false;
+	}
+	
 	// Create clan
 	// edit field in clan
 	// get clan members
 	// kick clan member
 	// add clan member
 	// get player info
-	// delete clan
 }

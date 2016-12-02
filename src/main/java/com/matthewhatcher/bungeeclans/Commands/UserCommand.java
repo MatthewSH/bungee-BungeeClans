@@ -19,7 +19,6 @@ public class UserCommand extends Command {
 	 *  clanchat <on/off> <id>
 	 *  cc <message> Send a message to team
 	 *  jraccept <id>
-	 *  jrdeny <id>
 	 *  list || directory
 	 *  info <clan>
 	 *  owner <clan>
